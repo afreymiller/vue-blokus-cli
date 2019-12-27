@@ -74,6 +74,9 @@ export default {
       this.left = e.pageX - offset.left;
       this.top = e.pageY - offset.top;
 
+      console.log("canvasApi: ");
+      console.log(canvasApi);
+
       canvasApi.updateCanvas(this.tileConfig, this.boardConfig, this.left, this.top);
     },
     onClick: function() {
