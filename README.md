@@ -22,3 +22,5 @@ yarn test:unit
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+// https://github.com/vuejs/vue-cli/issues/3678
