@@ -148,10 +148,6 @@ class canvasApiForTest {
     return gameConfig;
   }
 
-  getCoords(x) {
-    return this.getCoord(x);
-  }
-
   updateCanvas(tileConfig, gameConfig, xOffset, yOffset) {
   
     let ctx = this.initGrid();

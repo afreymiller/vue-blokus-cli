@@ -7,6 +7,8 @@ module.exports = {
     "!**/vendor/**",
     "!**/coverage/**",
     "!**/jest.config.js",
-    "!**/babel.config.js"
+    "!**/babel.config.js",
+    "!**/src/helpers/canvasApi.js",
+    "!**/src/helpers/matrixTransformApi.js"
   ]
 }
