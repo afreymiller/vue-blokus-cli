@@ -184,6 +184,10 @@ describe('CanvasApi', function() {
     });
   });
 
+  describe('getTileCoordsToRender()', function() {
+
+  });
+
 
   describe('MatrixTransformApi', function() {
     it('should properly rotate a matrix 90 degrees clockwise', () => {
