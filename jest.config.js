@@ -9,6 +9,7 @@ module.exports = {
     "!**/jest.config.js",
     "!**/babel.config.js",
     "!**/src/helpers/canvasApi.js",
-    "!**/src/helpers/matrixTransformApi.js"
+    "!**/src/helpers/matrixTransformApi.js",
+    "!**/tests/**"
   ]
 }

@@ -49,8 +49,8 @@ class canvasApiForTest {
   }
 
   getTileCoordsToRender(shapeConfig, xOffSet, yOffset) {
-    let xBox = getCoord(xOffSet);
-    let yBox = getCoord(yOffset);
+    let xBox = this.getCoord(xOffSet);
+    let yBox = this.getCoord(yOffset);
 
     let i, j = 0;
     const coords = [];
