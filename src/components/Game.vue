@@ -48,6 +48,7 @@ export default {
       boardConfig: state => state.game.boardConfig,
       tileConfig: state => state.playerOne.tiles.filter(e => e.selected === true)[0].config,
       tileId: state => state.playerOne.tiles.filter(e => e.selected === true)[0].id,
+      stateId: state => state.playerOne.tiles.filter(e => e.selected === true)[0].stateId,
       score: state => state.playerOne.score
     })
   },
@@ -59,16 +60,21 @@ export default {
       rotate: 'playerOne/updateRotation',
       placeTile: 'playerOne/placeTile',
       setSelected: 'playerOne/setSelected',
-      updateScore: 'playerOne/updateScore'
+      updateScore: 'playerOne/updateScore',
+      setPositionId: 'playerOne/updateStateId'
     }),
     rotateTile: function(orientation) {
       let tmp;
+      let newStateId;
       if (orientation == 'clockwise') {
         tmp = matrixTransformApi.rotateClockwise(this.tileConfig);
+        newStateId = this.stateId + 1;
       } else {
+        newStateId = this.stateId - 1;
         tmp = matrixTransformApi.rotateCounterclockwise(this.tileConfig);
       }
 
+      this.setPositionId({i: this.tileId, positionIndex: newStateId})
       this.rotate({i: this.tileId, newConfig: tmp});
     },
     calculatePosition: function(e) {

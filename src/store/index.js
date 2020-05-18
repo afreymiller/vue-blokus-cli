@@ -44,9 +44,9 @@ const playerOneModule = {
         stateId: 1,
         config: [
           [0, 0, 0, 0, 0],
+          [0, 0, 1, 0, 0],
+          [0, 0, 1, 0, 0],
           [0, 0, 1, 1, 0],
-          [0, 0, 1, 0, 0],
-          [0, 0, 1, 0, 0],
           [0, 0, 0, 0, 0]
         ]
       }
@@ -80,6 +80,9 @@ const playerOneModule = {
       console.log("newConfig: ", newConfig);
 
       state.tiles[i].config = newConfig;
+    },
+    updateStateId: (state, {i, positionIndex}) => {
+      state.tiles[i].stateId = positionIndex;
     },
     placeTile: (state, {i}) => {
       let index = state.tiles.findIndex(e => e.id === i)

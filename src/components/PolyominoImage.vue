@@ -35,7 +35,7 @@ export default {
       }
     }),
     imageUrl() {
-      return require('../assets/state_1.png');
+      return require(`../assets/state_${this.stateId}.png`);
     }
   },
   methods: {
