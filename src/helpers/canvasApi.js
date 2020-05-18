@@ -130,18 +130,17 @@ const isValid = (gameConfig, tileConfig, xCoord, yCoord) => {
 
 const updateGameState = (gameConfig, tileConfig, xCoord, yCoord) => {
   let i, j;
-  if (isValid(gameConfig, tileConfig, xCoord, yCoord)) {
-    for (i = 0; i < 5; i++) {
-      for (j = 0; j < 5; j++) {
-        if (tileConfig[i][j] === 1) {
-          let xDel = 2 - i;
-          let yDel = 2 - j;
-  
-          let mapX = xCoord + xDel;
-          let mapY = yCoord + yDel;
-            
-          gameConfig[mapX][mapY] = 1;
-        }
+
+  for (i = 0; i < 5; i++) {
+    for (j = 0; j < 5; j++) {
+      if (tileConfig[i][j] === 1) {
+        let xDel = 2 - i;
+        let yDel = 2 - j;
+
+        let mapX = xCoord + xDel;
+        let mapY = yCoord + yDel;
+          
+        gameConfig[mapX][mapY] = 1;
       }
     }
   }

@@ -54,10 +54,6 @@ export default {
       classString += ' polyomino-' + this.tileId.toString();
 
       return classString;
-    },
-    transpose: function(configExample) {
-      console.log("transpose it");
-      return configExample[0].map((col, i) => configExample.map(row => row[i]));
     }
   },
   mounted() {

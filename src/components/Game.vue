@@ -90,12 +90,15 @@ export default {
       return config[0].map((col, i) => config.map(row => row[i]));
     },
     onClick: function() {
-      console.log("on click called");
       if (this.left >= 0 && this.left <= 400 && this.top >= 0 && this.top <= 400) {
 
-        if (canvasApi.isValid(this.boardConfig, this.tileConfig, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top))) {
+        let transposedConfig = matrixTransformApi.rotateClockwise(this.transpose(this.tileConfig));
+        let clockwiseAgain = matrixTransformApi.rotateClockwise(transposedConfig);
+
+        if (canvasApi.isValid(this.boardConfig, clockwiseAgain, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top))) {
           /* TODO: This should take place entirely in apiCanvas and return a game state */
-          let tmpConfig = canvasApi.updateGameState(this.boardConfig, this.tileConfig, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top));
+
+          let tmpConfig = canvasApi.updateGameState(this.boardConfig, clockwiseAgain, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top));
           this.update(tmpConfig);
           this.placeTile({i: this.tileId});
           this.setSelected({i: null});

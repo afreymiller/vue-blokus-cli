@@ -26,12 +26,6 @@ export default {
     ...mapState({
       tiles: state => state.playerOne.tiles
     })
-  },
-  methods: {
-    transpose: function(config) {
-      console.log("transpose it");
-      return config[0].map((col, i) => config.map(row => row[i]));
-    }
   }
 }
 </script>

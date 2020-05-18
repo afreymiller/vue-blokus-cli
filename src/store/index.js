@@ -49,18 +49,19 @@ const playerOneModule = {
           [0, 0, 1, 1, 0],
           [0, 0, 0, 0, 0]
         ]
-      }
-      // {
-      //   id: 1,
-      //   selected: false,
-      //   config: [
-      //     [0, 0, 0, 0, 0],
-      //     [0, 1, 0, 1, 0],
-      //     [0, 1, 1, 1, 0],
-      //     [0, 0, 0, 0, 0],
-      //     [0, 0, 0, 0, 0]
-      //   ]
-      // },
+      },
+      {
+         id: 1,
+         selected: false,
+         stateId: 1,
+         config: [
+           [0, 0, 0, 0, 0],
+           [0, 1, 0, 1, 0],
+           [0, 1, 1, 1, 0],
+           [0, 0, 0, 0, 0],
+           [0, 0, 0, 0, 0]
+         ]
+      },
       // {
       //   id: 2,
       //   selected: false,
@@ -76,9 +77,6 @@ const playerOneModule = {
   },
   mutations: {
     updateRotation: (state, {i, newConfig}) => {
-      console.log("updating rotation: ");
-      console.log("newConfig: ", newConfig);
-
       state.tiles[i].config = newConfig;
     },
     updateStateId: (state, {i, positionIndex}) => {

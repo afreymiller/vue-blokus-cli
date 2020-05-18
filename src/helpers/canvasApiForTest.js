@@ -16,9 +16,6 @@ class canvasApiForTest {
 
     let canvas = document.getElementById(constants.BOARD_SELECTOR);
 
-    console.log("canvas: ");
-    console.log(canvas);
-
     let ctx = canvas.getContext("2d");
     for (x = 0; x <= bw; x += constants.TILE_LENGTH) {
       ctx.moveTo(0.5 + x, 0);
