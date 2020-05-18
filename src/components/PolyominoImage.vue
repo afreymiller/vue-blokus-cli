@@ -3,12 +3,7 @@
     class="wrapper"
     v-bind:class="getClass()"
   >
-    <polyomino-row
-      class="inner"
-      v-for="(row, index) in config"
-      v-bind:key="index"
-      :row="row"
-    />
+    <img :src="imageUrl"> 
   </div>
 </template>
 
@@ -17,7 +12,7 @@ import PolyominoRow from './PolyominoRow.vue'
 import { mapMutations, mapState } from 'vuex'
 
 export default {
-  name: 'Polyomino',
+  name: 'PolyominoImage',
   components: {
     PolyominoRow
   },
@@ -34,8 +29,14 @@ export default {
       },
       config: function(state) {
         return state.playerOne.tiles.filter(e => e.id === this.tileId)[0].config;
+      },
+      stateId: function(state) {
+        return state.playerOne.tiles.filter(e => e.id === this.tileId)[0].stateId;
       }
-    })
+    }),
+    imageUrl() {
+      return require('../assets/state_1.png');
+    }
   },
   methods: {
     ...mapMutations({

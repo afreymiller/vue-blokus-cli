@@ -41,6 +41,7 @@ const playerOneModule = {
       {
         id: 0,
         selected: true,
+        stateId: 1,
         config: [
           [0, 0, 0, 0, 0],
           [0, 0, 1, 1, 0],
@@ -48,35 +49,36 @@ const playerOneModule = {
           [0, 0, 1, 0, 0],
           [0, 0, 0, 0, 0]
         ]
-      },
-      {
-        id: 1,
-        selected: false,
-        config: [
-          [0, 0, 0, 0, 0],
-          [0, 1, 0, 1, 0],
-          [0, 1, 1, 1, 0],
-          [0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0]
-        ]
-      },
-      {
-        id: 2,
-        selected: false,
-        config: [
-          [0, 0, 0, 0, 0],
-          [0, 1, 0, 0, 0],
-          [0, 1, 1, 1, 0],
-          [0, 0, 0, 1, 0],
-          [0, 0, 0, 0, 0]
-        ]
       }
+      // {
+      //   id: 1,
+      //   selected: false,
+      //   config: [
+      //     [0, 0, 0, 0, 0],
+      //     [0, 1, 0, 1, 0],
+      //     [0, 1, 1, 1, 0],
+      //     [0, 0, 0, 0, 0],
+      //     [0, 0, 0, 0, 0]
+      //   ]
+      // },
+      // {
+      //   id: 2,
+      //   selected: false,
+      //   config: [
+      //     [0, 0, 0, 0, 0],
+      //     [0, 1, 0, 0, 0],
+      //     [0, 1, 1, 1, 0],
+      //     [0, 0, 0, 1, 0],
+      //     [0, 0, 0, 0, 0]
+      //   ]
+      // }
     ]
   },
   mutations: {
     updateRotation: (state, {i, newConfig}) => {
       console.log("updating rotation: ");
       console.log("newConfig: ", newConfig);
+
       state.tiles[i].config = newConfig;
     },
     placeTile: (state, {i}) => {

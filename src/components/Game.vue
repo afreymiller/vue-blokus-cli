@@ -5,12 +5,12 @@
       :selection=tileId
     />
     <button type="button"
-      v-on:click="rotateClockwise()"
+      v-on:click="rotateTile('clockwise')"
     >
       Rotate clockwise
     </button>
     <button type="button"
-      v-on:click="rotateCounterclockwise()"
+      v-on:click="rotateTile('counterclockwise')"
     >
       Rotate counterclockwise
     </button>
@@ -61,12 +61,14 @@ export default {
       setSelected: 'playerOne/setSelected',
       updateScore: 'playerOne/updateScore'
     }),
-    rotateClockwise: function() {
-      let tmp = matrixTransformApi.rotateCounterclockwise(this.tileConfig);
-      this.rotate({i: this.tileId, newConfig: tmp});
-    },
-    rotateCounterclockwise: function() {
-      let tmp = matrixTransformApi.rotateClockwise(this.tileConfig);
+    rotateTile: function(orientation) {
+      let tmp;
+      if (orientation == 'clockwise') {
+        tmp = matrixTransformApi.rotateClockwise(this.tileConfig);
+      } else {
+        tmp = matrixTransformApi.rotateCounterclockwise(this.tileConfig);
+      }
+
       this.rotate({i: this.tileId, newConfig: tmp});
     },
     calculatePosition: function(e) {
@@ -74,12 +76,15 @@ export default {
       this.left = e.pageX - offset.left;
       this.top = e.pageY - offset.top;
 
-      console.log("canvasApi: ");
-      console.log(canvasApi);
+      let transposedConfig = matrixTransformApi.rotateClockwise(this.transpose(this.tileConfig));
 
-      canvasApi.updateCanvas(this.tileConfig, this.boardConfig, this.left, this.top);
+      canvasApi.updateCanvas(matrixTransformApi.rotateClockwise(transposedConfig), this.boardConfig, this.left, this.top);
+    },
+    transpose: function(config) {
+      return config[0].map((col, i) => config.map(row => row[i]));
     },
     onClick: function() {
+      console.log("on click called");
       if (this.left >= 0 && this.left <= 400 && this.top >= 0 && this.top <= 400) {
 
         if (canvasApi.isValid(this.boardConfig, this.tileConfig, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top))) {

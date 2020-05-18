@@ -49,12 +49,18 @@ const getTileCoordsToRender = (shapeConfig, xOffSet, yOffset) => {
 
   let i, j = 0;
   const coords = [];
+  const indicesShaded = [];
 
   for (i = 0; i < 5; i++) {
     for (j = 0; j < 5; j++) {
       if (shapeConfig[i][j] === 1) {
         let xDel = 2 - i;
         let yDel = 2 - j;
+
+        indicesShaded.push({
+          x: xBox + xDel,
+          y: yBox + yDel
+        });
 
         coords.push({
           x: ((xBox + xDel) * constants.TILE_LENGTH) + 1,

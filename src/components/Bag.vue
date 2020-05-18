@@ -1,9 +1,8 @@
 <template>
   <div class="row">
-    <polyomino
+    <polyomino-image
       v-for="(polyomino, index) in tiles"
       v-bind:key="index"
-      :config="polyomino.config"
       :tileId="polyomino.id"
       class="col-md-1"
     />
@@ -11,13 +10,14 @@
 </template>
 
 <script>
-import Polyomino from './Polyomino.vue'
+import PolyominoImage from './PolyominoImage.vue'
+import tileOrientations from '../helpers/tileOrientations.js'
 import { mapState } from 'vuex'
 
 export default {
   name: 'Bag',
   components: {
-    Polyomino
+    PolyominoImage
   },
   props: {
     selection: Number
@@ -26,6 +26,12 @@ export default {
     ...mapState({
       tiles: state => state.playerOne.tiles
     })
+  },
+  methods: {
+    transpose: function(config) {
+      console.log("transpose it");
+      return config[0].map((col, i) => config.map(row => row[i]));
+    }
   }
 }
 </script>
