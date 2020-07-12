@@ -49,12 +49,18 @@ const getTileCoordsToRender = (shapeConfig, xOffSet, yOffset) => {
 
   let i, j = 0;
   const coords = [];
+  const indicesShaded = [];
 
   for (i = 0; i < 5; i++) {
     for (j = 0; j < 5; j++) {
       if (shapeConfig[i][j] === 1) {
         let xDel = 2 - i;
         let yDel = 2 - j;
+
+        indicesShaded.push({
+          x: xBox + xDel,
+          y: yBox + yDel
+        });
 
         coords.push({
           x: ((xBox + xDel) * constants.TILE_LENGTH) + 1,
@@ -124,18 +130,17 @@ const isValid = (gameConfig, tileConfig, xCoord, yCoord) => {
 
 const updateGameState = (gameConfig, tileConfig, xCoord, yCoord) => {
   let i, j;
-  if (isValid(gameConfig, tileConfig, xCoord, yCoord)) {
-    for (i = 0; i < 5; i++) {
-      for (j = 0; j < 5; j++) {
-        if (tileConfig[i][j] === 1) {
-          let xDel = 2 - i;
-          let yDel = 2 - j;
-  
-          let mapX = xCoord + xDel;
-          let mapY = yCoord + yDel;
-            
-          gameConfig[mapX][mapY] = 1;
-        }
+
+  for (i = 0; i < 5; i++) {
+    for (j = 0; j < 5; j++) {
+      if (tileConfig[i][j] === 1) {
+        let xDel = 2 - i;
+        let yDel = 2 - j;
+
+        let mapX = xCoord + xDel;
+        let mapY = yCoord + yDel;
+          
+        gameConfig[mapX][mapY] = 1;
       }
     }
   }
