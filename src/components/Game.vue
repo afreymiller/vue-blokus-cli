@@ -5,12 +5,12 @@
       :selection=tileId
     />
     <button type="button"
-      v-on:click="rotateClockwise()"
+      v-on:click="rotateTile('clockwise')"
     >
       Rotate clockwise
     </button>
     <button type="button"
-      v-on:click="rotateCounterclockwise()"
+      v-on:click="rotateTile('counterclockwise')"
     >
       Rotate counterclockwise
     </button>
@@ -48,6 +48,7 @@ export default {
       boardConfig: state => state.game.boardConfig,
       tileConfig: state => state.playerOne.tiles.filter(e => e.selected === true)[0].config,
       tileId: state => state.playerOne.tiles.filter(e => e.selected === true)[0].id,
+      stateId: state => state.playerOne.tiles.filter(e => e.selected === true)[0].stateId,
       score: state => state.playerOne.score
     })
   },
@@ -59,14 +60,21 @@ export default {
       rotate: 'playerOne/updateRotation',
       placeTile: 'playerOne/placeTile',
       setSelected: 'playerOne/setSelected',
-      updateScore: 'playerOne/updateScore'
+      updateScore: 'playerOne/updateScore',
+      setPositionId: 'playerOne/updateStateId'
     }),
-    rotateClockwise: function() {
-      let tmp = matrixTransformApi.rotateCounterclockwise(this.tileConfig);
-      this.rotate({i: this.tileId, newConfig: tmp});
-    },
-    rotateCounterclockwise: function() {
-      let tmp = matrixTransformApi.rotateClockwise(this.tileConfig);
+    rotateTile: function(orientation) {
+      let tmp;
+      let newStateId;
+      if (orientation == 'clockwise') {
+        tmp = matrixTransformApi.rotateClockwise(this.tileConfig);
+        newStateId = this.stateId + 1;
+      } else {
+        newStateId = this.stateId - 1;
+        tmp = matrixTransformApi.rotateCounterclockwise(this.tileConfig);
+      }
+
+      this.setPositionId({i: this.tileId, positionIndex: newStateId})
       this.rotate({i: this.tileId, newConfig: tmp});
     },
     calculatePosition: function(e) {
@@ -74,17 +82,23 @@ export default {
       this.left = e.pageX - offset.left;
       this.top = e.pageY - offset.top;
 
-      console.log("canvasApi: ");
-      console.log(canvasApi);
+      let transposedConfig = matrixTransformApi.rotateClockwise(this.transpose(this.tileConfig));
 
-      canvasApi.updateCanvas(this.tileConfig, this.boardConfig, this.left, this.top);
+      canvasApi.updateCanvas(matrixTransformApi.rotateClockwise(transposedConfig), this.boardConfig, this.left, this.top);
+    },
+    transpose: function(config) {
+      return config[0].map((col, i) => config.map(row => row[i]));
     },
     onClick: function() {
       if (this.left >= 0 && this.left <= 400 && this.top >= 0 && this.top <= 400) {
 
-        if (canvasApi.isValid(this.boardConfig, this.tileConfig, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top))) {
+        let transposedConfig = matrixTransformApi.rotateClockwise(this.transpose(this.tileConfig));
+        let clockwiseAgain = matrixTransformApi.rotateClockwise(transposedConfig);
+
+        if (canvasApi.isValid(this.boardConfig, clockwiseAgain, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top))) {
           /* TODO: This should take place entirely in apiCanvas and return a game state */
-          let tmpConfig = canvasApi.updateGameState(this.boardConfig, this.tileConfig, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top));
+
+          let tmpConfig = canvasApi.updateGameState(this.boardConfig, clockwiseAgain, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top));
           this.update(tmpConfig);
           this.placeTile({i: this.tileId});
           this.setSelected({i: null});
