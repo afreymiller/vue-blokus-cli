@@ -15,7 +15,7 @@ const gameModule = {
       {
         tileId: 2,
         orientationId: 1,
-        xCoord: 2,
+        xCoord: 1,
         yCoord: 2
       }
     ]

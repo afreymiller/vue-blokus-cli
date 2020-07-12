@@ -191,8 +191,6 @@ const canvasApi = {
 
     const currState = [];
 
-    /* TODO: This should eventually live in its own function */
-
     const tilesDictionary = {
       1: {
         1: [[0, 0, 0, 0, 0],
@@ -205,34 +203,35 @@ const canvasApi = {
       2: {
         1: [[0, 0, 0, 0, 0],
           [0, 0, 1, 1, 0],
-          [0, 1, 1, 0, 0],
           [0, 0, 1, 0, 0],
+          [0, 1, 1, 0, 0],
           [0, 0, 0, 0, 0]
         ]
       }
     }
 
-  
-    console.log("tilesDictionary: ");
-    console.log(tilesDictionary);
-    console.log("tilesDictionary[2][1]: ");
-    console.log(tilesDictionary[2][1]);
-    //debugger
-
     let coords = [];
-    let coordsToAdd = [];
+    //let coordsToAdd = [];
 
-    const coords1 = getTileCoordsToRenderForPlacedTile(tilesDictionary[1][1], 0, 0);
+    gameConfig.forEach(config => {
+      let coordsToAdd = getTileCoordsToRenderForPlacedTile(tilesDictionary[config.tileId][config.orientationId], config.xCoord, config.yCoord);
 
-    coords1.forEach(elem => {
-      coords.push(elem);
+      coordsToAdd.forEach(elem => {
+        coords.push(elem);
+      })
     })
 
-    const coords2 = getTileCoordsToRenderForPlacedTile(tilesDictionary[2][1], 5, 6);
+    // const coords1 = getTileCoordsToRenderForPlacedTile(tilesDictionary[1][1], 0, 0);
 
-    coords2.forEach(elem => {
-      coords.push(elem);
-    })
+    // coords1.forEach(elem => {
+    //   coords.push(elem);
+    // })
+
+    // const coords2 = getTileCoordsToRenderForPlacedTile(tilesDictionary[2][1], 5, 6);
+
+    // coords2.forEach(elem => {
+    //   coords.push(elem);
+    // })
 
     // for (const placedTile of gameConfig) {
 
