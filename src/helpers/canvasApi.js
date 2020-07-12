@@ -3,6 +3,7 @@ var $ = require('jquery');
 var _ = require('lodash');
 
 import constants from './constants.js';
+import matrixTransformsApi from './matrixTransformApi';
 
 const initGrid = () => {
   var bw = constants.CANVAS_WIDTH;
@@ -41,6 +42,32 @@ const renderPolyominoTiles = (coords, ctx) => {
     constants.TILE_LENGTH - 1, 
     constants.TILE_LENGTH - 1)
   )
+}
+
+const getTileCoordsToRenderForPlacedTile = (shapeConfig, xCoord, yCoord) => {
+  let i, j = 0;
+  const coords = [];
+  console.log("shapeConfig: ");
+  console.log(shapeConfig);
+
+  matrixTransformsApi.rotateClockwise(shapeConfig);
+  const config = matrixTransformsApi.getMirrorImageByColumns(shapeConfig);
+
+  for (i = 0; i < 5; i++) {
+    for (j = 0; j < 5; j++) {
+      if (config[i][j] === 1) {
+        let xDel = 2 - i;
+        let yDel = 2 - j;
+
+        coords.push({
+          x: ((xCoord + xDel) * constants.TILE_LENGTH) + 1,
+          y: ((yCoord + yDel) * constants.TILE_LENGTH) + 1
+        });
+      }
+    }
+  }
+
+  return coords;
 }
 
 const getTileCoordsToRender = (shapeConfig, xOffSet, yOffset) => {
@@ -165,33 +192,102 @@ const canvasApi = {
     const currState = [];
 
     /* TODO: This should eventually live in its own function */
-    for (i = 0; i < 20; i++) {
-      for (j = 0; j < 20; j++) {
-        if (gameConfig[i][j] === 1) {
-          currState.push({
-            x: (20 * i) + 1,
-            y: (20 * j) + 1
-          });
-        }
+
+    const tilesDictionary = {
+      1: {
+        1: [[0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0],
+          [0, 0, 1, 0, 0],
+          [0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0]
+        ]
+      },
+      2: {
+        1: [[0, 0, 0, 0, 0],
+          [0, 0, 1, 1, 0],
+          [0, 1, 1, 0, 0],
+          [0, 0, 1, 0, 0],
+          [0, 0, 0, 0, 0]
+        ]
       }
     }
 
+  
+    console.log("tilesDictionary: ");
+    console.log(tilesDictionary);
+    console.log("tilesDictionary[2][1]: ");
+    console.log(tilesDictionary[2][1]);
+    //debugger
+
+    let coords = [];
+    let coordsToAdd = [];
+
+    const coords1 = getTileCoordsToRenderForPlacedTile(tilesDictionary[1][1], 0, 0);
+
+    coords1.forEach(elem => {
+      coords.push(elem);
+    })
+
+    const coords2 = getTileCoordsToRenderForPlacedTile(tilesDictionary[2][1], 5, 6);
+
+    coords2.forEach(elem => {
+      coords.push(elem);
+    })
+
+    // for (const placedTile of gameConfig) {
+
+    //   coordsToAdd = getTileCoordsToRenderForPlacedTile(tilesDictionary[placedTile.tileId][placedTile.orientationId], placedTile.xCoord, placedTile.yCoord);
+    //   debugger
+    //   console.log("tilesDictionary: ");
+    //   console.log(tilesDictionary);
+    //   console.log("placedTile: ");
+    //   console.log(tilesDictionary[placedTile.tileId][placedTile.orientationId]);
+    //   console.log(coords);
+
+
+    //   for (const coordToAdd of coordsToAdd) {
+    //     coords.push(coordToAdd);
+    //   }
+    // }
+
+    // coords = [
+    //   {x: 1, y: 1},
+    //   {x: 61, y: 61},
+    //   {x: 61, y: 41},
+    //   {x: 21, y: 21} , 
+    //   {x: 41, y: 41},
+    //   {x: 21, y: 41}
+    // ]
+
+    // for (i = 0; i < 20; i++) {
+    //   for (j = 0; j < 20; j++) {
+    //     if (gameConfig[i][j] === 1) {
+    //       currState.push({
+    //         x: (20 * i) + 1,
+    //         y: (20 * j) + 1
+    //       });
+    //     }
+    //   }
+    // }
+
+    renderPolyominoTiles(coords, ctx);
+
     /* TODO: Coord should just be its own class */
-    let xCoord = getCoord(xOffset);
-    let yCoord = getCoord(yOffset);
+    // let xCoord = getCoord(xOffset);
+    // let yCoord = getCoord(yOffset);
 
-    const isValidMove = isValid(gameConfig, tileConfig, xCoord, yCoord);
+    // const isValidMove = isValid(gameConfig, tileConfig, xCoord, yCoord);
 
-    renderPolyominoTiles(currState, ctx);
+    // renderPolyominoTiles(currState, ctx);
 
-    if (isValidMove) {
-      const coords = getTileCoordsToRender(tileConfig, xOffset, yOffset);
-      renderPolyominoTiles(coords, ctx);
-    } else {
-      ctx.fillStyle = '#CCE7FF';
-      const coords = getTileCoordsToRender(tileConfig, xOffset, yOffset);
-      renderPolyominoTiles(coords, ctx);
-    }
+    // if (isValidMove) {
+    //   const coords = getTileCoordsToRender(tileConfig, xOffset, yOffset);
+    //   renderPolyominoTiles(coords, ctx);
+    // } else {
+    //   ctx.fillStyle = '#CCE7FF';
+    //   const coords = getTileCoordsToRender(tileConfig, xOffset, yOffset);
+    //   renderPolyominoTiles(coords, ctx);
+    // }
   }
 }
 

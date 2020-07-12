@@ -26,9 +26,29 @@ const rotateCounterclockwise = (matrix) => {
   return matrix;
 }
 
+const getMirrorImageByColumns = (matrix) => {
+  var n = matrix.length;
+
+  let flippedByColumns = [[0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0]
+  ];
+
+  for (var i = 0; i < n; i++) {
+    for (var j = 0; j < n; j++) {
+      flippedByColumns[n - 1 - i][j] = matrix[i][j];
+    }
+  }
+
+  return flippedByColumns;
+}
+
 const matrixTransformsApi = {
   rotateClockwise,
-  rotateCounterclockwise
+  rotateCounterclockwise,
+  getMirrorImageByColumns
 }
 
 export default matrixTransformsApi;
