@@ -47,8 +47,6 @@ const renderPolyominoTiles = (coords, ctx) => {
 const getTileCoordsToRenderForPlacedTile = (shapeConfig, xCoord, yCoord) => {
   let i, j = 0;
   const coords = [];
-  console.log("shapeConfig: ");
-  console.log(shapeConfig);
 
   matrixTransformsApi.rotateClockwise(shapeConfig);
   const config = matrixTransformsApi.getMirrorImageByColumns(shapeConfig);
@@ -124,6 +122,7 @@ const isValid = (gameConfig, tileConfig, xCoord, yCoord) => {
 
   for (i = 0; i < 5; i++) {
     for (j = 0; j < 5; j++) {
+
       if (tileConfig[i][j] === 1) {
         xCenterOffset = 2 - i;
         yCenterOffset = 2 - j;
@@ -143,6 +142,13 @@ const isValid = (gameConfig, tileConfig, xCoord, yCoord) => {
             }
 
             if (isTouchingSameColorDiagonally(gameConfig, tileX, tileY)) {
+              console.log("gameConfig: ");
+              console.log(gameConfig);
+              console.log("tileX: ");
+              console.log(tileX);
+              console.log("tileY: ");
+              console.log(tileY);
+              //debugger
               isTouchingCorner = true;
             }
         } else {
@@ -173,6 +179,100 @@ const updateGameState = (gameConfig, tileConfig, xCoord, yCoord) => {
   }
   
   return gameConfig;
+}
+
+const getGameBoard = (gameConfig) => {
+
+  let board = [[
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ], [
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+  ]];
+
+  const tilesDictionary = {
+    1: {
+      1: [[0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 1, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]
+      ]
+    },
+    2: {
+      1: [[0, 0, 0, 0, 0],
+        [0, 0, 1, 1, 0],
+        [0, 0, 1, 0, 0],
+        [0, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0]
+      ]
+    }
+  }
+
+  let boxesToSetToOne = [];
+
+  gameConfig.forEach(config => {
+
+    let tmpConfig = tilesDictionary[config.tileId][config.orientationId]
+
+    matrixTransformsApi.rotateClockwise(tmpConfig);
+    const transformedConfig = matrixTransformsApi.getMirrorImageByColumns(tmpConfig);
+   
+    for (let i = 0; i < 5; i++) {
+      for (let j = 0; j < 5; j++) {
+        if (transformedConfig[i][j] === 1) {
+          let xDel = 2 - i;
+          let yDel = 2 - j;
+
+          boxesToSetToOne.push({x: xDel + config.xCoord, y: yDel + config.yCoord});
+
+          //board[xDel][yDel] = 1;
+        }
+      }
+    }
+  });
+
+
+  boxesToSetToOne.forEach(box => {
+    board[box.y][box.x] = 1;
+  });
+
+  return board;
 }
 
 const canvasApi = {
@@ -236,12 +336,6 @@ const canvasApi = {
     // for (const placedTile of gameConfig) {
 
     //   coordsToAdd = getTileCoordsToRenderForPlacedTile(tilesDictionary[placedTile.tileId][placedTile.orientationId], placedTile.xCoord, placedTile.yCoord);
-    //   debugger
-    //   console.log("tilesDictionary: ");
-    //   console.log(tilesDictionary);
-    //   console.log("placedTile: ");
-    //   console.log(tilesDictionary[placedTile.tileId][placedTile.orientationId]);
-    //   console.log(coords);
 
 
     //   for (const coordToAdd of coordsToAdd) {
@@ -272,21 +366,28 @@ const canvasApi = {
     renderPolyominoTiles(coords, ctx);
 
     /* TODO: Coord should just be its own class */
-    // let xCoord = getCoord(xOffset);
-    // let yCoord = getCoord(yOffset);
+    let xCoord = getCoord(xOffset);
+    let yCoord = getCoord(yOffset);
 
-    // const isValidMove = isValid(gameConfig, tileConfig, xCoord, yCoord);
+    const gameBoard = getGameBoard(gameConfig);
+
+    const isValidMove = isValid(gameBoard, tileConfig, xCoord, yCoord);
 
     // renderPolyominoTiles(currState, ctx);
 
-    // if (isValidMove) {
-    //   const coords = getTileCoordsToRender(tileConfig, xOffset, yOffset);
-    //   renderPolyominoTiles(coords, ctx);
-    // } else {
-    //   ctx.fillStyle = '#CCE7FF';
-    //   const coords = getTileCoordsToRender(tileConfig, xOffset, yOffset);
-    //   renderPolyominoTiles(coords, ctx);
-    // }
+    //matrixTransformsApi.rotateCounterclockwise(tileConfig);
+    //atrixTransformsApi.rotateClockwise(tileConfig);
+
+    //const transformedConfig = matrixTransformsApi.getMirrorImageByColumns(tileConfig);
+
+    if (isValidMove) {
+      const coords = getTileCoordsToRender(tileConfig, xOffset, yOffset);
+      renderPolyominoTiles(coords, ctx);
+    } else {
+      ctx.fillStyle = '#CCE7FF';
+      const coords = getTileCoordsToRender(tileConfig, xOffset, yOffset);
+      renderPolyominoTiles(coords, ctx);
+    }
   }
 }
 
