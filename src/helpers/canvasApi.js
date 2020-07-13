@@ -135,9 +135,6 @@ const isValidClick = (gameConfig, tileConfig, xCoord, yCoord) => {
       }
     }
   }
-
-  console.log("all tiles to check");
-  console.log(allTiles);
   
   for (let k = 0; k < allTiles.length; k++) {
 
@@ -184,29 +181,14 @@ const isValid = (gameConfig, tileConfig, xCoord, yCoord) => {
           (tileY <= 19) && (tileY >= 0)) {
  
             if (isTouchingSameColorHorizontally(gameConfig, tileY, tileX)) {
-              console.log("tileX: ");
-              console.log(tileX);
-              console.log("tileY: ");
-              console.log(tileY);
               return false;
             }
             
             if (isOverlappingTile(gameConfig, tileY, tileX)) {
-              console.log("tileX: ");
-              console.log(tileX);
-              console.log("tileY: ");
-              console.log(tileY);
               return false;
             }
 
             if (isTouchingSameColorDiagonally(gameConfig, tileY, tileX)) {
-              // console.log("gameConfig: ");
-              // console.log(gameConfig);
-              // console.log("tileX: ");
-              // console.log(tileX);
-              // console.log("tileY: ");
-              // console.log(tileY);
-              //debugger
               isTouchingCorner = true;
             }
         } else {
@@ -383,6 +365,24 @@ const canvasApi = {
           [0, 0, 1, 0, 0],
           [0, 0, 1, 1, 0],
           [0, 0, 0, 0, 0]
+        ],
+        2: [[0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0],
+          [0, 1, 1, 1, 0],
+          [0, 1, 0, 0, 0],
+          [0, 0, 0, 0, 0]
+        ],
+        3: [[0, 0, 0, 0, 0],
+          [0, 1, 1, 0, 0],
+          [0, 0, 1, 0, 0],
+          [0, 0, 1, 0, 0],
+          [0, 0, 0, 0, 0]
+        ],
+        4: [[0, 0, 0, 0, 0],
+          [0, 0, 0, 1, 0],
+          [0, 1, 1, 1, 0],
+          [0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0]
         ]
       }
     }
@@ -397,48 +397,6 @@ const canvasApi = {
         coords.push(elem);
       })
     })
-
-    // const coords1 = getTileCoordsToRenderForPlacedTile(tilesDictionary[1][1], 0, 0);
-
-    // coords1.forEach(elem => {
-    //   coords.push(elem);
-    // })
-
-    // const coords2 = getTileCoordsToRenderForPlacedTile(tilesDictionary[2][1], 5, 6);
-
-    // coords2.forEach(elem => {
-    //   coords.push(elem);
-    // })
-
-    // for (const placedTile of gameConfig) {
-
-    //   coordsToAdd = getTileCoordsToRenderForPlacedTile(tilesDictionary[placedTile.tileId][placedTile.orientationId], placedTile.xCoord, placedTile.yCoord);
-
-
-    //   for (const coordToAdd of coordsToAdd) {
-    //     coords.push(coordToAdd);
-    //   }
-    // }
-
-    // coords = [
-    //   {x: 1, y: 1},
-    //   {x: 61, y: 61},
-    //   {x: 61, y: 41},
-    //   {x: 21, y: 21} , 
-    //   {x: 41, y: 41},
-    //   {x: 21, y: 41}
-    // ]
-
-    // for (i = 0; i < 20; i++) {
-    //   for (j = 0; j < 20; j++) {
-    //     if (gameConfig[i][j] === 1) {
-    //       currState.push({
-    //         x: (20 * i) + 1,
-    //         y: (20 * j) + 1
-    //       });
-    //     }
-    //   }
-    // }
 
     renderPolyominoTiles(coords, ctx);
 
