@@ -133,15 +133,15 @@ const isValid = (gameConfig, tileConfig, xCoord, yCoord) => {
         if ((tileX <= 19) && (tileX >= 0) &&
           (tileY <= 19) && (tileY >= 0)) {
 
-            if (isTouchingSameColorHorizontally(gameConfig, tileX, tileY)) {
+            if (isTouchingSameColorHorizontally(gameConfig, tileY, tileX)) {
               return false;
             }
             
-            if (isOverlappingTile(gameConfig, tileX, tileY)) {
+            if (isOverlappingTile(gameConfig, tileY, tileX)) {
               return false;
             }
 
-            if (isTouchingSameColorDiagonally(gameConfig, tileX, tileY)) {
+            if (isTouchingSameColorDiagonally(gameConfig, tileY, tileX)) {
               console.log("gameConfig: ");
               console.log(gameConfig);
               console.log("tileX: ");
