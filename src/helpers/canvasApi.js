@@ -116,6 +116,56 @@ const isOverlappingTile = (gameConfig, tileX, tileY) => {
   return _.get(gameConfig, `${tileX}.${tileY}`) === 1;
 }
 
+const isValidClick = (gameConfig, tileConfig, xCoord, yCoord) => {  
+
+  let i, j, xCenterOffset, yCenterOffset, tileX, tileY, isTouchingCorner = false;
+
+  let allTiles = [];
+
+  for (i = 0; i < 5; i++) {
+    for (j = 0; j < 5; j++) {
+      if (tileConfig[i][j] === 1) {
+        xCenterOffset = 2 - i;
+        yCenterOffset = 2 - j;
+
+        tileX = xCenterOffset + xCoord;
+        tileY = yCenterOffset + yCoord;
+
+        allTiles.push({x: tileX, y: tileY});
+      }
+    }
+  }
+
+  console.log("all tiles to check");
+  console.log(allTiles);
+  
+  for (let k = 0; k < allTiles.length; k++) {
+
+    let xTile = allTiles[k].x;
+    let yTile = allTiles[k].y;
+
+    if ((xTile <= 19) && (xTile >= 0) &&
+        (yTile <= 19) && (yTile >= 0)) {
+
+        if (isTouchingSameColorHorizontally(gameConfig, yTile, xTile)) {
+          return false;
+        }
+        
+        if (isOverlappingTile(gameConfig, yTile, xTile)) {
+          return false;
+        }
+
+        if (isTouchingSameColorDiagonally(gameConfig, yTile, xTile)) {
+          isTouchingCorner = true;
+        }
+    } else {
+      return false;
+    } 
+  }
+
+  return isTouchingCorner;
+}
+
 const isValid = (gameConfig, tileConfig, xCoord, yCoord) => {  
 
   let i, j, xCenterOffset, yCenterOffset, tileX, tileY, isTouchingCorner = false;
@@ -127,31 +177,40 @@ const isValid = (gameConfig, tileConfig, xCoord, yCoord) => {
         xCenterOffset = 2 - i;
         yCenterOffset = 2 - j;
 
-        tileX = xCenterOffset + xCoord;
-        tileY = yCenterOffset + yCoord;
+        tileX = xCoord + xCenterOffset;
+        tileY = yCoord + yCenterOffset;
 
         if ((tileX <= 19) && (tileX >= 0) &&
           (tileY <= 19) && (tileY >= 0)) {
-
+ 
             if (isTouchingSameColorHorizontally(gameConfig, tileY, tileX)) {
-              return false;
-            }
-            
-            if (isOverlappingTile(gameConfig, tileY, tileX)) {
-              return false;
-            }
-
-            if (isTouchingSameColorDiagonally(gameConfig, tileY, tileX)) {
-              console.log("gameConfig: ");
-              console.log(gameConfig);
               console.log("tileX: ");
               console.log(tileX);
               console.log("tileY: ");
               console.log(tileY);
+              return false;
+            }
+            
+            if (isOverlappingTile(gameConfig, tileY, tileX)) {
+              console.log("tileX: ");
+              console.log(tileX);
+              console.log("tileY: ");
+              console.log(tileY);
+              return false;
+            }
+
+            if (isTouchingSameColorDiagonally(gameConfig, tileY, tileX)) {
+              // console.log("gameConfig: ");
+              // console.log(gameConfig);
+              // console.log("tileX: ");
+              // console.log(tileX);
+              // console.log("tileY: ");
+              // console.log(tileY);
               //debugger
               isTouchingCorner = true;
             }
         } else {
+          //debugger
           return false;
         }      
       }
@@ -277,7 +336,9 @@ const getGameBoard = (gameConfig) => {
 
 const canvasApi = {
   isValid,
+  isValidClick,
   updateGameState,
+  getGameBoard,
   getCoords: (x) => {
     return getCoord(x);
   },

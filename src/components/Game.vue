@@ -92,17 +92,33 @@ export default {
     onClick: function() {
       if (this.left >= 0 && this.left <= 400 && this.top >= 0 && this.top <= 400) {
 
-        let transposedConfig = matrixTransformApi.rotateClockwise(this.transpose(this.tileConfig));
-        let clockwiseAgain = matrixTransformApi.rotateClockwise(transposedConfig);
+        let gameBoard = canvasApi.getGameBoard(this.boardConfig);
 
-        if (canvasApi.isValid(this.boardConfig, clockwiseAgain, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top))) {
+        // let transposedConfig = matrixTransformApi.rotateClockwise(this.transpose(this.tileConfig));
+        // let clockwiseAgain = matrixTransformApi.rotateClockwise(transposedConfig);
+
+        let xCoordClicked = canvasApi.getCoords(this.left);
+        let yCoordClicked = canvasApi.getCoords(this.top);
+
+
+        let configToUse = matrixTransformApi.getMirrorImageByColumns(this.tileConfig);
+
+        configToUse = matrixTransformApi.rotateCounterclockwise(configToUse);
+
+        let isValidMove = canvasApi.isValidClick(gameBoard, configToUse, xCoordClicked, yCoordClicked);
+
+        console.log("isValid: ");
+        console.log(isValidMove);
+
+        if (isValidMove) {
           /* TODO: This should take place entirely in apiCanvas and return a game state */
 
-          let tmpConfig = canvasApi.updateGameState(this.boardConfig, clockwiseAgain, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top));
-          this.update(tmpConfig);
-          this.placeTile({i: this.tileId});
-          this.setSelected({i: null});
-          this.updateScore({config: this.tileConfig});
+          alert("is valid")
+          // let tmpConfig = canvasApi.updateGameState(this.boardConfig, clockwiseAgain, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top));
+          // this.update(tmpConfig);
+          // this.placeTile({i: this.tileId});
+          // this.setSelected({i: null});
+          // this.updateScore({config: this.tileConfig});
         } 
       }
     }
