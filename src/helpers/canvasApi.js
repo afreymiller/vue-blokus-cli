@@ -202,26 +202,6 @@ const isValid = (gameConfig, tileConfig, xCoord, yCoord) => {
   return isTouchingCorner;
 }
 
-const updateGameState = (gameConfig, tileConfig, xCoord, yCoord) => {
-  let i, j;
-
-  for (i = 0; i < 5; i++) {
-    for (j = 0; j < 5; j++) {
-      if (tileConfig[i][j] === 1) {
-        let xDel = 2 - i;
-        let yDel = 2 - j;
-
-        let mapX = xCoord + xDel;
-        let mapY = yCoord + yDel;
-          
-        gameConfig[mapX][mapY] = 1;
-      }
-    }
-  }
-  
-  return gameConfig;
-}
-
 const getGameBoard = (gameConfig) => {
 
   let board = [[
@@ -310,7 +290,6 @@ const getGameBoard = (gameConfig) => {
 
           boxesToSetToOne.push({x: xDel + config.xCoord, y: yDel + config.yCoord});
 
-          //board[xDel][yDel] = 1;
         }
       }
     }
@@ -327,7 +306,6 @@ const getGameBoard = (gameConfig) => {
 const canvasApi = {
   isValid,
   isValidClick,
-  updateGameState,
   getGameBoard,
   getCoords: (x) => {
     return getCoord(x);
