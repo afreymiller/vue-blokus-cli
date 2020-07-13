@@ -113,12 +113,12 @@ export default {
         if (isValidMove) {
           /* TODO: This should take place entirely in apiCanvas and return a game state */
 
-          alert("is valid")
+          //alert("is valid")
           // let tmpConfig = canvasApi.updateGameState(this.boardConfig, clockwiseAgain, canvasApi.getCoords(this.left), canvasApi.getCoords(this.top));
-          // this.update(tmpConfig);
-          // this.placeTile({i: this.tileId});
-          // this.setSelected({i: null});
-          // this.updateScore({config: this.tileConfig});
+          this.update({tileId: this.tileId, orientationId: 1, xCoord: xCoordClicked, yCoord: yCoordClicked});
+          this.placeTile({i: this.tileId});
+          this.setSelected({i: null});
+          this.updateScore({config: this.tileConfig});
         } 
       }
     }

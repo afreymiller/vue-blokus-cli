@@ -44,7 +44,7 @@ const gameModule = {
     // ]
   },
   mutations: {
-    updateBoardConfig: (state, payload) => state.boardConfig = payload
+    updateBoardConfig: (state, payload) => state.boardConfig.push(payload)
   },
   namespaced: true
 }
