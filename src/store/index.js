@@ -93,6 +93,7 @@ const playerOneModule = {
       state.score += total;
     },
     setSelected: (state, {i}) => {
+      console.log("calling setSelected");
       if (i !==  null) {
         let index = 0;
 

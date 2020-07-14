@@ -192,7 +192,6 @@ const isValid = (gameConfig, tileConfig, xCoord, yCoord) => {
               isTouchingCorner = true;
             }
         } else {
-          //debugger
           return false;
         }      
       }

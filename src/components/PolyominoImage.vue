@@ -3,7 +3,7 @@
     class="wrapper"
     v-bind:class="getClass()"
   >
-    <img :src="imageUrl"> 
+    <img :src="imageUrl" :height="80" :width="80"> 
   </div>
 </template>
 
@@ -35,7 +35,7 @@ export default {
       }
     }),
     imageUrl() {
-      return require(`../assets/state_${this.stateId}.png`);
+      return require(`../assets/tile_${this.tileId}_state_${this.stateId}.png`);
     }
   },
   methods: {

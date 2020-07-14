@@ -108,8 +108,8 @@ export default {
           
           this.update({tileId: this.tileId, orientationId: this.stateId, xCoord: xCoordClicked, yCoord: yCoordClicked});
           this.placeTile({i: this.tileId});
-          this.setSelected({i: null});
           this.updateScore({config: this.tileConfig});
+          this.setSelected({i: null});
         } 
       }
     }
