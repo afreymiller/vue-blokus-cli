@@ -87,7 +87,10 @@ export default {
       canvasApi.updateCanvas(matrixTransformApi.rotateClockwise(transposedConfig), this.boardConfig, this.left, this.top);
     },
     transpose: function(config) {
-      return config[0].map((col, i) => config.map(row => row[i]));
+     
+      let transposed =  config[0].map((col, i) => config.map(row => row[i]));
+
+      return transposed;
     },
     onClick: function() {
       if (this.left >= 0 && this.left <= 400 && this.top >= 0 && this.top <= 400) {

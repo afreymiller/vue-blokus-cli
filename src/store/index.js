@@ -7,13 +7,13 @@ const gameModule = {
   state: {
     boardConfig: [
       {
-        tileId: 1,
+        tileId: 3,
         orientationId: 1,
         xCoord: 0,
         yCoord: 0
       },
       {
-        tileId: 2,
+        tileId: 4,
         orientationId: 1,
         xCoord: 1,
         yCoord: 2
@@ -104,7 +104,6 @@ const playerOneModule = {
       state.score += total;
     },
     setSelected: (state, {i}) => {
-      console.log("calling setSelected");
       if (i !==  null) {
         let index = 0;
 
