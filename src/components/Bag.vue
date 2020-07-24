@@ -24,7 +24,7 @@ export default {
   },
   computed: {
     ...mapState({
-      tiles: state => state.playerOne.tiles
+      tiles: state => state.playerOne.tiles.filter(e => !e.hasBeenPlaced)
     })
   }
 }

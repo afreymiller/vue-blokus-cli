@@ -33,6 +33,7 @@ const playerOneModule = {
       {
         id: 0,
         selected: true,
+        hasBeenPlaced: false,
         stateId: 1,
         config: [
           [0, 0, 0, 0, 0],
@@ -45,6 +46,7 @@ const playerOneModule = {
       {
          id: 1,
          selected: false,
+         hasBeenPlaced: false,
          stateId: 1,
          config: [
            [0, 0, 0, 0, 0],
@@ -75,8 +77,17 @@ const playerOneModule = {
       state.tiles[i].stateId = positionIndex;
     },
     placeTile: (state, {i}) => {
-      let index = state.tiles.findIndex(e => e.id === i)
-      state.tiles.splice(index, 1);
+      let index = state.tiles.findIndex(e => e.id === i);
+      state.tiles[i].hasBeenPlaced = true;
+      state.tiles[i].selected = false;
+
+      let j = 0;
+
+      for (j = 0; j < state.tiles.length; j++) {
+        if (state.tiles[j].selected == false && !state.tiles[j].hasBeenPlaced) {
+          state.tiles[j].selected = true;
+        }
+      }
     },
     updateScore: (state, {config}) => {
       let total = 0;
@@ -105,7 +116,12 @@ const playerOneModule = {
           }
         }
       } else {
-        state.tiles[0].selected = true;
+        let index = 0;
+        for (index = 0; index < state.tiles.length; index++) {
+          if (!state.tiles[index].hasBeenPlaced) {
+            state.tiles[index].selected = true;
+          }
+        }
       }
       
     }
